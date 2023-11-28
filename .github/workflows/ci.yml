@@ -1,0 +1,62 @@
+name: ci
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+#  demo:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 18
+#          cache: 'yarn'
+#
+#      - name: Install
+#        run: yarn install --frozen-lockfile
+#
+#      - name: Build
+#        run: yarn build_demo
+#
+#      - name: Deploy to Netlify
+#        uses: nwtgck/actions-netlify@v1.2
+#        with:
+#          publish-dir: './demo/dist'
+#          production-branch: master
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          deploy-message: 'Deploy from GitHub Actions'
+#          enable-pull-request-comment: true
+#          enable-commit-comment: false
+#          overwrites-pull-request-comment: true
+#          alias: ${{ github.head_ref }}
+#        env:
+#          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+#          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+#        timeout-minutes: 5

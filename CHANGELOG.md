@@ -1,3 +1,7 @@
+## 2.0.0 (2023-11-28)
+
+Update to typescript
+
 ## 1.2.7 (2022-10-21)
 
 fix issue with undefined attrs
@@ -23,7 +27,6 @@ Add colwidth and table width to the spec.
 Add `maxTableWidth` as an input into `columnResizing`.
 
 Add general Bug Fixes from various PRs to the main repo.
-
 
 ## 0.7.9 (2018-10-23)
 
