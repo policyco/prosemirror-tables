@@ -38,7 +38,7 @@
     "prettier": "^2.8.8",
     "prosemirror-commands": "^1.5.2",
     "prosemirror-example-setup": "^1.2.2",
-    "prosemirror-menu": "^1.2.2",
+    "prosemirror-menu": "^1.2.4",
     "prosemirror-schema-basic": "^1.2.2",
     "prosemirror-test-builder": "^1.1.1",
     "tsup": "^7.2.0",
@@ -56,5 +56,8 @@
     "build_readme": "builddocs --name tables --format markdown --main src/README.md src/*.js > README.md",
     "format": "prettier --write .",
     "lint": "eslint ./src/ ./test/ && prettier --check ."
+  },
+  "resolutions": {
+    "prosemirror-view": "^1.32.4"
   }
 }
