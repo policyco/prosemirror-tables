@@ -28,7 +28,6 @@ Add `maxTableWidth` as an input into `columnResizing`.
 
 Add general Bug Fixes from various PRs to the main repo.
 
-
 ## 0.7.9 (2018-10-23)
 
 ### Bug fixes

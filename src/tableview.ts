@@ -1,6 +1,5 @@
 import { Node } from 'prosemirror-model';
 import { EditorView, NodeView } from 'prosemirror-view';
-import { CellAttrs } from './util';
 
 /**
  * @public
@@ -39,7 +38,7 @@ export class TableView implements NodeView {
       this.colgroup,
       this.table,
       this.cellMinWidth,
-      this.maxTableWidth
+      this.maxTableWidth,
     );
     return true;
   }
@@ -62,7 +61,7 @@ export function updateColumnsOnResize(
   cellMinWidth: number,
   maxTableWidth = 0,
   overrideCol = -1,
-  overrideValue= 0,
+  overrideValue = 0,
 ): number {
   let totalWidth = 0;
   let fixedWidth = true;
@@ -84,19 +83,21 @@ export function updateColumnsOnResize(
   const availableWidth = maxTableWidth - totalWidth;
   totalWidth = 0;
   for (let i = 0, col = 0; i < row.childCount; i++) {
-    let { colspan, colwidth } = row.child(i).attrs;
+    const { colspan, colwidth } = row.child(i).attrs;
     for (let j = 0; j < colspan; j++, col++) {
       let hasWidth = colwidth && colwidth[j];
       if (overrideCol == col) {
         const maxWidth = availableWidth + hasWidth;
-        hasWidth = !maxTableWidth || maxWidth > overrideValue ? overrideValue : maxWidth;
+        hasWidth =
+          !maxTableWidth || maxWidth > overrideValue ? overrideValue : maxWidth;
         finalWidth = hasWidth;
       }
-      let cssWidth = hasWidth ? hasWidth + 'px' : '';
+      const cssWidth = hasWidth ? hasWidth + 'px' : '';
       totalWidth += hasWidth || cellMinWidth;
       if (!hasWidth) fixedWidth = false;
       if (!nextDOM) {
-        colgroup.appendChild(document.createElement('col')).style.width = cssWidth;
+        colgroup.appendChild(document.createElement('col')).style.width =
+          cssWidth;
       } else {
         if (nextDOM.style.width != cssWidth) nextDOM.style.width = cssWidth;
         nextDOM = nextDOM.nextSibling as HTMLElement;
@@ -105,7 +106,7 @@ export function updateColumnsOnResize(
   }
 
   while (nextDOM) {
-    let after = nextDOM.nextSibling as HTMLElement;
+    const after = nextDOM.nextSibling as HTMLElement;
     nextDOM.parentNode?.removeChild(nextDOM);
     nextDOM = after;
   }

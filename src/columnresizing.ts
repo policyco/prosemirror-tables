@@ -158,7 +158,10 @@ function handleMouseMove(
         const table = $cell.node(-1);
         const map = TableMap.get(table);
         const tableStart = $cell.start(-1);
-        const col = map.colCount($cell.pos - tableStart) + $cell.nodeAfter!.attrs.colspan - 1;
+        const col =
+          map.colCount($cell.pos - tableStart) +
+          $cell.nodeAfter!.attrs.colspan -
+          1;
 
         if (col == map.width - 1) {
           return;
@@ -201,8 +204,14 @@ function handleMouseDown(
     window.removeEventListener('mousemove', move);
     const pluginState = columnResizingPluginKey.getState(view.state);
     if (pluginState?.dragging) {
-      updateColumnWidth(view, pluginState.activeHandle, finalWidth || draggedWidth(pluginState.dragging, event, cellMinWidth));
-      view.dispatch(view.state.tr.setMeta(columnResizingPluginKey, { setDragging: null }));
+      updateColumnWidth(
+        view,
+        pluginState.activeHandle,
+        finalWidth || draggedWidth(pluginState.dragging, event, cellMinWidth),
+      );
+      view.dispatch(
+        view.state.tr.setMeta(columnResizingPluginKey, { setDragging: null }),
+      );
     }
   }
 
@@ -260,7 +269,10 @@ function currentColWidth(
 
 function domCellAround(target: HTMLElement | null): HTMLElement | null {
   while (target && target.nodeName != 'TD' && target.nodeName != 'TH') {
-    target = target.classList && target.classList.contains('ProseMirror') ? null : (target.parentNode as HTMLElement);
+    target =
+      target.classList && target.classList.contains('ProseMirror')
+        ? null
+        : (target.parentNode as HTMLElement);
   }
   return target;
 }
@@ -300,7 +312,9 @@ function draggedWidth(
 }
 
 function updateHandle(view: EditorView, value: number): void {
-  view.dispatch(view.state.tr.setMeta(columnResizingPluginKey, { setHandle: value }));
+  view.dispatch(
+    view.state.tr.setMeta(columnResizingPluginKey, { setHandle: value }),
+  );
 }
 
 function updateColumnWidth(
@@ -312,7 +326,8 @@ function updateColumnWidth(
   const table = $cell.node(-1);
   const map = TableMap.get(table);
   const start = $cell.start(-1);
-  const col = map.colCount($cell.pos - start) + $cell.nodeAfter!.attrs.colspan - 1;
+  const col =
+    map.colCount($cell.pos - start) + $cell.nodeAfter!.attrs.colspan - 1;
   const tr = view.state.tr;
 
   for (let row = 0; row < map.height; row++) {
@@ -327,7 +342,9 @@ function updateColumnWidth(
     if (attrs.colwidth && attrs.colwidth[index] == width) {
       continue;
     }
-    const colwidth = attrs.colwidth ? attrs.colwidth.slice() : zeroes(attrs.colspan);
+    const colwidth = attrs.colwidth
+      ? attrs.colwidth.slice()
+      : zeroes(attrs.colspan);
     colwidth[index] = width;
     tr.setNodeMarkup(start + pos, null, { ...attrs, colwidth: colwidth });
   }
@@ -346,7 +363,10 @@ function displayColumnWidth(
   const $cell = view.state.doc.resolve(cell);
   const table = $cell.node(-1);
   const start = $cell.start(-1);
-  const col = TableMap.get(table).colCount($cell.pos - start) + $cell.nodeAfter!.attrs.colspan - 1;
+  const col =
+    TableMap.get(table).colCount($cell.pos - start) +
+    $cell.nodeAfter!.attrs.colspan -
+    1;
   let dom: Node | null = view.domAtPos($cell.start(-1)).node;
   while (dom && dom.nodeName != 'TABLE') {
     dom = dom.parentNode;
