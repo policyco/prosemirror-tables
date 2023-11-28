@@ -12,11 +12,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to npm
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npm build
-      - run: npm publish --access public
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+
+      - run: yarn build
+
+      - run: yarn publish --access public
