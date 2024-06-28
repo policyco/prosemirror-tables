@@ -42,7 +42,10 @@ function setCellAttrs(node: Node, extraAttrs: Attrs): Attrs {
   if (node.attrs.rowspan != 1) attrs.rowspan = node.attrs.rowspan;
   if (node.attrs.colwidth) {
     attrs['data-colwidth'] = node.attrs.colwidth.join(',');
-    const width = node.attrs.colwidth.reduce((acc: number, w: number) => acc + w, 0);
+    const width = node.attrs.colwidth.reduce(
+      (acc: number, w: number) => acc + w,
+      0,
+    );
     if (width > 0) {
       attrs.style = `width: ${width}px;`;
     }
