@@ -1,6 +1,6 @@
 {
   "name": "@policyco/prosemirror-tables",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "PolicyCo's version of ProseMirror's rowspan/colspan tables component",
   "type": "module",
   "main": "dist/index.cjs",

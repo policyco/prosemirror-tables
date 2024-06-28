@@ -40,8 +40,16 @@ function setCellAttrs(node: Node, extraAttrs: Attrs): Attrs {
   const attrs: MutableAttrs = {};
   if (node.attrs.colspan != 1) attrs.colspan = node.attrs.colspan;
   if (node.attrs.rowspan != 1) attrs.rowspan = node.attrs.rowspan;
-  if (node.attrs.colwidth)
+  if (node.attrs.colwidth) {
     attrs['data-colwidth'] = node.attrs.colwidth.join(',');
+    const width = node.attrs.colwidth.reduce(
+      (acc: number, w: number) => acc + w,
+      0,
+    );
+    if (width > 0) {
+      attrs.style = `width: ${width}px;`;
+    }
+  }
   for (const prop in extraAttrs) {
     const setter = extraAttrs[prop].setDOMAttr;
     if (setter) setter(node.attrs[prop], attrs);
@@ -99,7 +107,7 @@ export interface TableNodesOptions {
    * Additional attributes to add to cells. Maps attribute names to
    * objects with the following properties:
    */
-  cellAttributes: { [key: string]: CellAttributes };
+  cellAttributes?: { [key: string]: CellAttributes };
 
   /**
    * The max width allowed of the table. When resizing the table, it will not be allowed to grow larger than this value.
